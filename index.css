@@ -1,0 +1,19 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.imgBanner{
+  display: flex;
+  justify-content: center;
+}
+
+.imgBanner img {
+    width: 30rem;
+}
+
+.footerText {
+    color: white;
+    align-items: center;
+    margin: 20px;
+}
