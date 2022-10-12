@@ -14,15 +14,4 @@ const ropaB = new indumentaria(2, "Remera Pibes Chorros", 3000, "./recursos/Pibe
 const ropaC = new indumentaria(3, "buzo Gorillaz", 4500, "./recursos/buzo2.jpg");
 
 prendas.push(ropaA, ropaB, ropaC);
-switch(ordenador.value){
-    case "rec":
-        prendas.sort((a,b) => b.id - a.id);
-        break;
-    case "mame":
-        prendas.sort((a, b) => b.precio - a.precio);
-        break;
-    case "mema":
-        prendas.sort((a, b) => a.precio - b.precio);
-        break;
-}
 

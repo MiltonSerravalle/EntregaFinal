@@ -88,8 +88,25 @@ const cartRenderizado = () => {
         `
 
     enCarro.append(articulo);
-    
+    let btnRestarCarro = document.getElementById("btnRestar" + item.id);
+    let btnSumarCarro = document.getElementById("btnSumar" + item.id);
+    let btnSacarCarro = document.getElementById("btnQuitar" + item.id);
+    btnRestarCarro.addEventListener("click" , () => restarCarro(item));
+    btnSumarCarro.addEventListener("click", () => sumarCarro(item));
+    btnSacarCarro.addEventListener("click", () => sacarCarro(item));
 
     })
 
+    if(parseInt(cartNumber.innerHTML) != 0){
+      btnVaciarCarro.style.display = "inline";
+    }
+    let compraTotal = document.createElement("div");
+    let result = StorageCarrito.reduce((acc, elem) => acc + elem.subtotal, 0);
+    compraTotal.innerHTML = `<h5 class="fw-bold text-center"> Total= $${resultado} </h5>`
+    enCarro.append(compraTotal);
+    if(StorageCarrito.length === 0){
+      enCarro.innerHTML = "<h3>Carrito Vacio</h3>";
+      btnVaciarCarro.style.display = "none";
+    }
 }
+
