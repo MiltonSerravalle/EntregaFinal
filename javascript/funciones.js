@@ -1,3 +1,4 @@
+/*PRODUCTO RENDER*/
 const productoRenderizado = (prdt) => {
     prdt.forEach(item => {
         let articulo = document.createElement("articulo");
@@ -16,10 +17,7 @@ const productoRenderizado = (prdt) => {
     botonAgregarCarro.addEventListener("click", () => agregarACarro(item));
 });
 }
-
-
-
-
+/*AGREGAR CARRO*/
 const agregarACarro = producto => {
     let productoStock = storageCarrito.find (item => item.id === producto.id);
     if (!productoStock){
@@ -53,9 +51,7 @@ Toastify({
     onClick: function () { }
   }).showToast();
 }
-
-
-/* CARRITO RENDER */
+/*CARRITO RENDER*/
 const cartRenderizado = () => {
     enCarro.innerHTML = "";
     storageCarrito.forEach(item => {
@@ -86,7 +82,6 @@ const cartRenderizado = () => {
       </div>
     </div>
         `
-
     enCarro.append(articulo);
     let btnRestarCarro = document.getElementById("btnRestar" + item.id);
     let btnSumarCarro = document.getElementById("btnSumar" + item.id);
@@ -94,24 +89,20 @@ const cartRenderizado = () => {
     btnRestarCarro.addEventListener("click" , () => restarCarro(item));
     btnSumarCarro.addEventListener("click", () => sumarCarro(item));
     btnSacarCarro.addEventListener("click", () => sacarCarro(item));
-
     })
-
     if(parseInt(cartNumber.innerHTML) != 0){
       btnVaciarCarro.style.display = "inline";
     }
     let compraTotal = document.createElement("div");
-    let result = StorageCarrito.reduce((acc, elem) => acc + elem.subtotal, 0);
+    let result = storageCarrito.reduce((acc, elem) => acc + elem.subtotal, 0);
     compraTotal.innerHTML = `<h5 class="fw-bold text-center"> Total= $${resultado} </h5>`
     enCarro.append(compraTotal);
-    if(StorageCarrito.length === 0){
+    if(storageCarrito.length === 0){
       enCarro.innerHTML = "<h3>Carrito Vacio</h3>";
       btnVaciarCarro.style.display = "none";
     }
 }
-
 /*VACIAR CARRO*/
-
 const vaciarCarro = () => {
   Swal.fire({
     title: 'Desea vaciar su carrito?',
@@ -144,24 +135,17 @@ const vaciarCarro = () => {
       enCarro.innerHTML = `<h3>Carro Vacio</h3>`
       storageCarrito = [];
       cartNumber.innerHTML = 0;
-      VaciarCarro.style.display = "none";
-
+      vaciarCarro.style.display = "none";
 }
 })
 }
-
-
 /*BUSCA PRODUCTO*/
-
 const buscarProducto = (prod) => {
   productos.innerHTML = "";
   let buscar = prendas.filter(ropa => (`${ropa.nombre}`).toLowerCase().includes(prod));
   productoRenderizado(buscar);
 }
-
-
 /*SUMAR CARRO*/
-
 const sumarCarro = (producto) => {
   producto.cantidad ++;
   producto.subtotal += producto.precioUno;
@@ -170,9 +154,7 @@ const sumarCarro = (producto) => {
   cartNumber.innerHTML = JSON.parse(localStorage.getItem("storageNumeroCarro"));
   cartRenderizado();
 }
-
 /*RESTAR CARRO*/
-
 const restarCarro = (producto) => {
   if(producto.cantidad > 1){
     producto.cantidad --;
@@ -183,8 +165,6 @@ const restarCarro = (producto) => {
     cartRenderizado();
   }
 }
-
-
 /*SACAR CARRITO*/
 const sacarCarro = (producto) => {
   let indicar = storageCarrito.indexOf(producto);
