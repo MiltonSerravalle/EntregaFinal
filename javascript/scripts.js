@@ -1,11 +1,11 @@
 /*LOCALSTORAGE*/
 
-let StorageCarroNumero = JSON.parse(localStorage.getItem("StorageNumeroCarro"));
-let StorageCarro = JSON.parse(localStorage.getItem("storageCarrito"))
+let storageCarroNumero = JSON.parse(localStorage.getItem("storageNumeroCarro"));
+let storageCarrito = JSON.parse(localStorage.getItem("storageCarrito"))
 
 /*CARRO*/
 
-StorageCarroNumero ? cartNumber.innerHTML = StorageNumeroCarro : cartNumber.innerHTML = 0;
+storageCarroNumero ? cartNumber.innerHTML = storageNumeroCarro : cartNumber.innerHTML = 0;
 
 cartRenderizado();
 
@@ -14,7 +14,7 @@ if(parseInt(cartNumber.innerHTML) ===0){
 }
 
 /*ROPA RENDE*/
-productoRenderizado()
+productoRenderizado(prendas)
 
 /*VACIAR CARRO*/
 btnVaciarCarro.addEventListener("click", vaciarCarro); 

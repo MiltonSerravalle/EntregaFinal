@@ -21,7 +21,7 @@ const productoRenderizado = (prdt) => {
 
 
 const agregarACarro = producto => {
-    let productoStock = storageCarro.find (item => item.id === producto.id);
+    let productoStock = storageCarrito.find (item => item.id === producto.id);
     if (!productoStock){
         storageCarrito.push({
             id: producto.id,
@@ -58,7 +58,7 @@ Toastify({
 /* CARRITO RENDER */
 const cartRenderizado = () => {
     enCarro.innerHTML = "";
-    storageCarro.forEach(item => {
+    storageCarrito.forEach(item => {
         let articulo = document.createElement("articulo");
         articulo.innerHTML = `
         <div class="card mb-3" style="max-width: 540px;">
@@ -108,5 +108,89 @@ const cartRenderizado = () => {
       enCarro.innerHTML = "<h3>Carrito Vacio</h3>";
       btnVaciarCarro.style.display = "none";
     }
+}
+
+/*VACIAR CARRO*/
+
+const vaciarCarro = () => {
+  Swal.fire({
+    title: 'Desea vaciar su carrito?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Sí, vaciarlo',
+    cancelButtonText: 'Cancelar',
+    allowOutsideClick: () => {
+      const popup = Swal.getPopup()
+      popup.classList.remove('swal2-show')
+      setTimeout(() => {
+        popup.classList.add('animate__animated', 'animate__headShake')
+      })
+      setTimeout(() => {
+        popup.classList.remove('animate__animated', 'animate__headShake')
+      }, 500)
+      return false
+    }
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire(
+        '',
+        'Su carrito ha sido vaciado',
+        'success'
+      )
+      localStorage.removeItem("storageCarrito");
+      localStorage.setItem("storageNumeroCarro", 0)
+      enCarro.innerHTML = `<h3>Carro Vacio</h3>`
+      storageCarrito = [];
+      cartNumber.innerHTML = 0;
+      VaciarCarro.style.display = "none";
+
+}
+})
+}
+
+
+/*BUSCA PRODUCTO*/
+
+const buscarProducto = (prod) => {
+  productos.innerHTML = "";
+  let buscar = prendas.filter(ropa => (`${ropa.nombre}`).toLowerCase().includes(prod));
+  productoRenderizado(buscar);
+}
+
+
+/*SUMAR CARRO*/
+
+const sumarCarro = (producto) => {
+  producto.cantidad ++;
+  producto.subtotal += producto.precioUno;
+  localStorage.setItem("storageNumeroCarro", JSON.stringify(parseInt(cartNumber.innerHTML) + 1));
+  localStorage.setItem("storageCarrito", JSON.stringify(storageCarrito));
+  cartNumber.innerHTML = JSON.parse(localStorage.getItem("storageNumeroCarro"));
+  cartRenderizado();
+}
+
+/*RESTAR CARRO*/
+
+const restarCarro = (producto) => {
+  if(producto.cantidad > 1){
+    producto.cantidad --;
+    producto.subtotal -= producto.precioUno;
+    localStorage.setItem("storageCarrito", JSON.stringify(storageCarrito));
+    localStorage.setItem("storageNumeroCarro", JSON.stringify(parseint(cartNumber.innerHTML) -1));
+    cartNumber.innerHTML = JSON.parse(localStorage.getItem("storageNumeroCarro"));
+    cartRenderizado();
+  }
+}
+
+
+/*SACAR CARRITO*/
+const sacarCarro = (producto) => {
+  let indicar = storageCarrito.indexOf(producto);
+  localStorage.setItem("storageNumeroCarro", JSON.stringify(parseInt(cartNumber.innerHTML) - producto.cantidad));
+  cartNumber.innerHTML = JSON.parse(localStorage.getItem("storageNumeroCarro"));
+  storageCarrito.splice(indicar,1);
+  localStorage.setItem("storageCarrito", JSON.stringify(storageCarrito));
 }
 
